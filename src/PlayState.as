@@ -15,7 +15,6 @@ package {
 		public static const DOG_VELOCITY:int = 40;
 		
 		override public function create():void {
-			//add(new FlxText(0,0,100,"Hello, World!")); //adds a 100px wide text field at position 0,0 (upper left)
 			FlxG.bgColor = 0xffaaaaff;
 			FlxG.debug = true;
 						
@@ -63,6 +62,8 @@ package {
 			FlxG.collide(rightWall, player);
 			FlxG.collide(leftWall,  dogEnemy, function():void { dogEnemy.velocity.x = DOG_VELOCITY;  } );
 			FlxG.collide(rightWall, dogEnemy, function():void { dogEnemy.velocity.x = -DOG_VELOCITY; } );
+			
+			FlxG.overlap(player, dogEnemy, function():void { player.getHurt() } )
 		}
 		
 		public function addTree(xPosition:int): void {

@@ -1,6 +1,7 @@
 package
 {
 	import org.flixel.*;
+	import org.osmf.metadata.ObjectFacet;
 	
 	public class Player extends FlxSprite
 	{
@@ -15,6 +16,8 @@ package
 		public static const RUNNING_LEFT:int   = 4;
 		public static const JUMPING_RIGHT:int  = 5;
 		public static const JUMPING_LEFT:int   = 6;
+		public static const HURT_RIGHT:int     = 7;
+		public static const HURT_LEFT:int      = 8;
 		
 		public static const STEP_OVER_TOLERANCE:int     = 6;
 		public static const FRAMES_TO_START_FEEDING:int = 60;
@@ -59,6 +62,11 @@ package
 			}
 		}
 		
+		public function getHurt():void {
+			state = facing == FlxObject.LEFT ? HURT_LEFT : HURT_RIGHT;
+			this.makeGraphic(WIDTH, HEIGHT, 0xFF000000);
+		}
+		
 		public override function update():void {
 
 			super.update();
@@ -79,16 +87,7 @@ package
 					this.standingTimer = 0;
 				}
 				if(!FlxG.keys.LEFT && !FlxG.keys.RIGHT) {
-					switch(this.state) {
-						case RUNNING_LEFT:
-						case JUMPING_LEFT:
-							this.state = STANDING_LEFT;
-							break;
-						case RUNNING_RIGHT:
-						case JUMPING_RIGHT:
-							this.state = STANDING_RIGHT;
-							break;
-					}
+					this.state = facing == FlxObject.LEFT ? STANDING_LEFT : STANDING_RIGHT;
 				}
 				if(FlxG.keys.justPressed("UP")) {
 					this.standingTimer = 0;
