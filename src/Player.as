@@ -42,7 +42,7 @@ package
 		public function feedTrees():void {
 			var tree:Tree;
 			var i:int;
-			if(this.acceleration.x == 0) {
+			if(this.acceleration.x == 0 && this.isTouching(FlxObject.FLOOR)) {
 				for(i = 0; i < trees.length; i++) {
 					tree = trees[i];
 					if(this.x >= tree.x - STEP_OVER_TOLERANCE && this.x <= tree.x + STEP_OVER_TOLERANCE) {
@@ -93,7 +93,6 @@ package
 					this.standingTimer = 0;
 					this.velocity.y = -this.maxVelocity.y/2;
 				}
-				this.feedTrees();
 			} else {
 				if(FlxG.keys.LEFT) {
 					this.standingTimer = 0;
@@ -106,6 +105,8 @@ package
 					this.state = JUMPING_RIGHT;
 				}
 			}
+			
+			this.feedTrees();
 			
 			switch(this.state) {
 				case STANDING_LEFT:
