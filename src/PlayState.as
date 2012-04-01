@@ -1,12 +1,24 @@
 // ActionScript file
 
 package {
+	import flashx.textLayout.formats.BackgroundColor;
+	
 	import org.flixel.*;
 
 	public class PlayState extends FlxState {
 		
 		[Embed(source="/assets/music/DeliberateThoughtConverted.mp3")]
-		public var BGMusic:Class;		
+		public var BGMusic:Class;
+		
+		[Embed(source="/assets/images/bkg_mountains_front.png")]
+		public var BGImageMountainsFront:Class;
+		
+		[Embed(source="/assets/images/bkg_mountains_back.png")]
+		public var BGImageMountainsBack:Class;
+		
+		public var bgMountainsFront:FlxSprite;
+		public var bgMountainsBack:FlxSprite;
+		public var bgDarkness:FlxSprite;
 		
 		public var player:Player;
 		public var trees:Array;
@@ -20,6 +32,18 @@ package {
 		
 		override public function create():void {
 			FlxG.bgColor = 0xffaaaaff;
+			
+			bgMountainsBack = new FlxSprite(0, 0, BGImageMountainsBack);
+			add(bgMountainsBack);
+
+			bgDarkness = new FlxSprite(0, 0);
+			bgDarkness.makeGraphic(FlxG.width, FlxG.height, 0x88000000);
+			bgDarkness.blend = "multiply";
+			add(bgDarkness);
+			
+			bgMountainsFront = new FlxSprite(0, 0, BGImageMountainsFront);
+			add(bgMountainsFront);
+			
 			FlxG.debug = true;
 						
 			floor = new FlxTileblock(
