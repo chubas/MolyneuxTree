@@ -2,8 +2,12 @@
 
 package {
 	import org.flixel.*;
-	
+
 	public class PlayState extends FlxState {
+		
+		[Embed(source="/assets/music/DeliberateThoughtConverted.mp3")]
+		public var BGMusic:Class;		
+		
 		public var player:Player;
 		public var trees:Array;
 		public var floor:FlxTileblock;
@@ -45,6 +49,8 @@ package {
 			dogEnemy = new Enemy(20, 11);
 			dogEnemy.velocity.x = DOG_VELOCITY;
 			add(dogEnemy);
+			
+			FlxG.playMusic(BGMusic);
 		}
 		
 		override public function update():void {
