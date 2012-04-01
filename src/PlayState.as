@@ -18,13 +18,18 @@ package {
 			FlxG.bgColor = 0xffaaaaff;
 			FlxG.debug = true;
 						
-			floor = new FlxTileblock(0, 13 * HelloFlixel.TILESIZE, 256, 208);
-			floor.makeGraphic(256, HelloFlixel.TILESIZE, 0xff689c16);
+			floor = new FlxTileblock(
+				0,
+				Math.ceil(HelloFlixel.WINDOW_HEIGHT / 2) * HelloFlixel.TILESIZE,
+				HelloFlixel.WINDOW_WIDTH * HelloFlixel.TILESIZE,
+				HelloFlixel.TILESIZE
+			);
+			floor.makeGraphic(HelloFlixel.WINDOW_WIDTH * HelloFlixel.TILESIZE, HelloFlixel.TILESIZE, 0xff689c16);
 			add(floor);
 			
 			// Invisible walls
-			leftWall  = new FlxTileblock(-HelloFlixel.TILESIZE, 0, HelloFlixel.TILESIZE, 208);
-			rightWall = new FlxTileblock(256, 0, HelloFlixel.TILESIZE, 208);
+			leftWall  = new FlxTileblock(-HelloFlixel.TILESIZE, 0, HelloFlixel.TILESIZE, HelloFlixel.WINDOW_HEIGHT * HelloFlixel.TILESIZE);
+			rightWall = new FlxTileblock(HelloFlixel.WINDOW_WIDTH * HelloFlixel.TILESIZE, 0, HelloFlixel.TILESIZE, HelloFlixel.WINDOW_HEIGHT * HelloFlixel.TILESIZE);
 			add(leftWall);
 			add(rightWall);
 			
@@ -46,14 +51,6 @@ package {
 
 			player.update();			
 			super.update();
-			
-			//Check if player collected a coin or coins this frame
-			// FlxG.overlap(coins,player,getCoin);
-			
-			//Check to see if the player touched the exit door this frame
-			// FlxG.overlap(exit,player,win);
-			
-			//Finally, bump the player up against the level
 			
 			FlxG.collide(floor, player);
 			FlxG.collide(floor, dogEnemy);
