@@ -16,8 +16,12 @@ package {
 		[Embed(source="/assets/images/bkg_mountains_back.png")]
 		public var BGImageMountainsBack:Class;
 		
+		[Embed(source="/assets/images/bkg_trees_back.png")]
+		public var BGImageTreesBack:Class;
+		
 		public var bgMountainsFront:FlxSprite;
 		public var bgMountainsBack:FlxSprite;
+		public var bgTreesBack:FlxSprite;
 		public var bgDarkness:FlxSprite;
 		
 		public var player:Player;
@@ -35,15 +39,27 @@ package {
 		override public function create():void {
 			FlxG.bgColor = 0xffaaaaff;
 			
-			bgMountainsBack = new FlxSprite(0, 0, BGImageMountainsBack);
+			bgMountainsBack = new Background(0, 0);
+			bgMountainsBack.loadGraphic(BGImageMountainsBack);
+			bgMountainsBack.scale.y = HelloFlixel.WINDOW_HEIGHT * HelloFlixel.TILESIZE / bgMountainsBack.height / 2;
+			bgMountainsBack.y = HelloFlixel.WINDOW_HEIGHT * HelloFlixel.TILESIZE/4 - bgMountainsBack.height/2;
 			add(bgMountainsBack);
 
-			bgDarkness = new FlxSprite(0, 0);
+			bgTreesBack = new Background(0, 0);
+			bgTreesBack.loadGraphic(BGImageTreesBack);
+			bgTreesBack.scale.y = HelloFlixel.WINDOW_HEIGHT * HelloFlixel.TILESIZE / bgTreesBack.height / 2;
+			bgTreesBack.y = HelloFlixel.WINDOW_HEIGHT * HelloFlixel.TILESIZE*3/4 - bgTreesBack.height/2;
+			add(bgTreesBack);
+
+			bgDarkness = new Background(0, 0);
 			bgDarkness.makeGraphic(FlxG.width, FlxG.height, 0xff000000);
 			bgDarkness.blend = "multiply";
 			add(bgDarkness);
 			
-			bgMountainsFront = new FlxSprite(0, 0, BGImageMountainsFront);
+			bgMountainsFront = new Background(0, 0);
+			bgMountainsFront.loadGraphic(BGImageMountainsFront);
+			bgMountainsFront.scale.y = HelloFlixel.WINDOW_HEIGHT * HelloFlixel.TILESIZE / bgMountainsFront.height / 2;
+			bgMountainsFront.y = HelloFlixel.WINDOW_HEIGHT * HelloFlixel.TILESIZE/4 - bgMountainsFront.height/2;
 			add(bgMountainsFront);
 			
 			FlxG.debug = true;
@@ -99,7 +115,7 @@ package {
 		}
 		
 		public function setDarkness():void {
-			bgDarkness.alpha = (darkness * 0.9) / 100;
+			bgDarkness.alpha = (darkness * 0.6) / 100;
 		}
 		
 		public function addTree(xPosition:int): void {
