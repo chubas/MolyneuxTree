@@ -30,6 +30,8 @@ package {
 		
 		public static const DOG_VELOCITY:int = 40;
 		
+		public var darkness:Number = 100.0;
+		
 		override public function create():void {
 			FlxG.bgColor = 0xffaaaaff;
 			
@@ -37,7 +39,7 @@ package {
 			add(bgMountainsBack);
 
 			bgDarkness = new FlxSprite(0, 0);
-			bgDarkness.makeGraphic(FlxG.width, FlxG.height, 0x88000000);
+			bgDarkness.makeGraphic(FlxG.width, FlxG.height, 0xff000000);
 			bgDarkness.blend = "multiply";
 			add(bgDarkness);
 			
@@ -68,6 +70,7 @@ package {
 			
 			player = new Player(5, 10);
 			player.trees = trees;
+			player.playState = this;
 			add(player);
 			
 			dogEnemy = new Enemy(20, 11);
@@ -79,7 +82,7 @@ package {
 		
 		override public function update():void {
 
-			player.update();			
+			player.update();
 			super.update();
 			
 			FlxG.collide(floor, player);
@@ -90,7 +93,13 @@ package {
 			FlxG.collide(leftWall,  dogEnemy, function():void { dogEnemy.velocity.x = DOG_VELOCITY;  } );
 			FlxG.collide(rightWall, dogEnemy, function():void { dogEnemy.velocity.x = -DOG_VELOCITY; } );
 			
-			FlxG.overlap(player, dogEnemy, function():void { player.getHurt() } )
+			FlxG.overlap(player, dogEnemy, function():void { player.getHurt() } );
+			
+			setDarkness();
+		}
+		
+		public function setDarkness():void {
+			bgDarkness.alpha = (darkness * 0.9) / 100;
 		}
 		
 		public function addTree(xPosition:int): void {

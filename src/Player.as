@@ -7,7 +7,9 @@ package
 	{
 		public var standingTimer:int;
 		public var state:int;
+		
 		public var trees:Array;
+		public var playState:PlayState;
 		
 		public static const STANDING_RIGHT:int = 0;
 		public static const STANDING_LEFT:int  = 1;
@@ -21,6 +23,8 @@ package
 		
 		public static const STEP_OVER_TOLERANCE:int     = 6;
 		public static const FRAMES_TO_START_FEEDING:int = 60;
+		
+		public static const DARKNESS_STEP:Number = 0.3;
 		
 		public static const WIDTH:int = 2 * HelloFlixel.TILESIZE;
 		public static const HEIGHT:int = 3 * HelloFlixel.TILESIZE;
@@ -58,6 +62,17 @@ package
 				for(i = 0; i < trees.length; i++) {
 					tree = trees[i];
 					tree.stopFeeding();
+				}
+			}
+			if(this.state == FEEDING) {
+				playState.darkness -= DARKNESS_STEP;
+				if(playState.darkness < 0) {
+					playState.darkness = 0;
+				}
+			} else {
+				playState.darkness += DARKNESS_STEP;
+				if(playState.darkness > 100) {
+					playState.darkness = 100;
 				}
 			}
 		}
